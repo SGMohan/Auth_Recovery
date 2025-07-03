@@ -8,6 +8,7 @@ const AuthRouter = require('./controller/auth.controller');
 
 
 const app = express();
+const port = process.env.PORT || 3000 
 
 app.use(cors({origin: process.env.FRONTEND_URL, credentials: true}));
 app.use(express.json());
@@ -17,7 +18,7 @@ app.use(cookieParser());
 app.use("/auth", AuthRouter);
 
 // Start the server
-app.listen(process.env.PORT || 3000 , process.env.HOSTNAME, () => {
+app.listen(port, process.env.HOSTNAME, () => {
   console.log(`http://${process.env.HOSTNAME}:${process.env.PORT}`);
 });
 
