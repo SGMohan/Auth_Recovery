@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use("/auth", AuthRouter);
 
 // Start the server
-app.listen(process.env.PORT, process.env.HOSTNAME, () => {
+app.listen(process.env.PORT || 3000 , process.env.HOSTNAME, () => {
   console.log(`http://${process.env.HOSTNAME}:${process.env.PORT}`);
 });
 
