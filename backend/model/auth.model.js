@@ -34,5 +34,4 @@ const userSchema = mongoose.Schema({
 },{timestamps: true});
 
 const UserModel = mongoose.model("users", userSchema);
-// console.log("User model created", UserModel);
 module.exports = UserModel;

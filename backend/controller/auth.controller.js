@@ -8,11 +8,10 @@ const { verifyToken } = require("../middleware/auth.middleware");
 
 //Get route to check if the server is running
 AuthRouter.get("/", async (_, res) => {
-  const users = await UserModel.find();
+  await UserModel.find();
   return res.status(200).json({
     message: "Authentication API is operational",
     success: true,
-    data: users,
   });
 });
 
@@ -30,7 +29,7 @@ AuthRouter.post("/register", async (req, res) => {
     const existingUser = await UserModel.findOne({ email: req.body.email });
     if (existingUser) {
       return res.status(400).json({
-        message: "Account with this email already exists",
+        message: "Email already exists",
         success: false,
       });
     }
@@ -40,9 +39,9 @@ AuthRouter.post("/register", async (req, res) => {
 
     const user = await UserModel.create(req.body);
     return res.status(201).json({
-      message: "Account created successfully",
+      message: "Register successfully",
       success: true,
-      data: user,
+      data: { name: user.name, email: user.email }
     });
   } catch (error) {
     return res.status(500).json({
@@ -75,7 +74,7 @@ AuthRouter.post("/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(400).json({
-        message: "Invalid login credentials",
+        message: "Invalid Password",
         success: false,
       });
     }
@@ -90,7 +89,10 @@ AuthRouter.post("/login", async (req, res) => {
     return res.status(200).json({
       message: "Login successful",
       success: true,
-      data: { email: user.email },
+      data: {
+        name: user.name,
+        email: user.email,
+      },
       token: token,
     });
   } catch (error) {
@@ -311,28 +313,15 @@ AuthRouter.post("/forgot-password", async (req, res) => {
         "List-Unsubscribe": "<mailto:support@yourapp.com?subject=Unsubscribe>",
       },
     };
-
-    try {
-      const sendMail = await transporter.sendMail(mailOptions);
-      if (sendMail.accepted.length > 0) {
-        return res.status(200).json({
-          message: "Password reset link sent to your email",
-          success: true,
-          data: {
-            email: user.email,
-          },
-        });
-      }
-      return res.status(500).json({
-        message: "Failed to send reset email",
-        success: false,
-      });
-    } catch (err) {
-      console.error("Send mail error:", err);
-      return res.status(500).json({
-        message: "Failed to deliver reset instructions",
-        success: false,
-        error: err.message,
+    const sendMail = transporter.sendMail(mailOptions);
+    if (sendMail) {
+      return res.status(200).json({
+        message: "Password reset link sent to your email",
+        success: true,
+        data: {
+          email: user.email,
+          resetToken: resetToken,
+        },
       });
     }
   } catch (error) {
@@ -346,7 +335,7 @@ AuthRouter.post("/forgot-password", async (req, res) => {
 });
 
 // Reset password route
-AuthRouter.post("/reset-password/:resetToken", async (req, res) => {
+AuthRouter.post("/reset-password", async (req, res) => {
   const { email, resetToken, newPassword } = req.body;
   if (!email || !resetToken || !newPassword) {
     return res.status(400).json({
@@ -378,7 +367,7 @@ AuthRouter.post("/reset-password/:resetToken", async (req, res) => {
       }
     );
     return res.status(200).json({
-      message: "Password updated successfully",
+      message: "Password reset successfully",
       success: true,
     });
   } catch (error) {
@@ -390,7 +379,46 @@ AuthRouter.post("/reset-password/:resetToken", async (req, res) => {
   }
 });
 
-//get user by ID
+//Validate token route
+AuthRouter.get("/validate-resetToken/:resetToken", async (req, res) => {
+  const { resetToken } = req.params;
+  const { email } = req.query;
+
+  if (!resetToken || !email) {
+    return res.status(400).json({
+      valid: false,
+      message: "Reset token and email are required",
+    });
+  }
+
+  try {
+    const user = await UserModel.findOne({
+      email: decodeURIComponent(email),
+      resetToken,
+      resetTokenExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(200).json({
+        valid: false,
+        message: "Invalid or expired reset token",
+      });
+    }
+
+    return res.status(200).json({
+      valid: true,
+      message: "Reset token is valid",
+    });
+  } catch (error) {
+    console.error("Token validation error:", error);
+    return res.status(500).json({
+      valid: false,
+      message: "Server error during token validation",
+    });
+  }
+});
+
+//Get user by ID
 AuthRouter.get("/user/:_id", verifyToken, async (req, res) => {
   try {
     const _id = req.user.id;
@@ -405,10 +433,33 @@ AuthRouter.get("/user/:_id", verifyToken, async (req, res) => {
     return res.status(200).json({
       message: "User fetched successfully",
       success: true,
-      data: user,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email
+      }
     });
   } catch (error) {
     console.error("Error fetching user:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
+//Logout route
+AuthRouter.post("/logout", verifyToken, async (req, res) => {
+  try {
+    const _id = req.user.id;
+    await UserModel.updateOne({ _id }, { $set: { refreshToken: null } });
+    return res.status(200).json({
+      message: "Logged out successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error logging out:", error);
     return res.status(500).json({
       message: "Internal server error",
       success: false,

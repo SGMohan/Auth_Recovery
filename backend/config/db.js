@@ -9,4 +9,5 @@ async function connectDB(){
     process.exit(1); // Exit the process with failure
   }
 }
+
 module.exports = connectDB;
