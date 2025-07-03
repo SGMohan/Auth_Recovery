@@ -180,7 +180,7 @@ const ResetPassword = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-br from-indigo-500 to-indigo-900 text-white py-2.5 rounded-full font-medium hover:opacity-90 transition-opacity flex items-center justify-center disabled:opacity-50"
+            className="w-full bg-gradient-to-br from-indigo-500 to-indigo-900 text-white py-2.5 rounded-full font-medium hover:opacity-90 transition-opacity flex items-center justify-center disabled:opacity-50 hover:cursor-pointer"
           >
             {isLoading ? (
               <span className="flex items-center">
