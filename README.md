@@ -5,7 +5,7 @@
 ![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-14+-339933?logo=node.js&logoColor=white)
 
-A complete authentication system with secure account recovery features built with **MERN stack**.
+A complete authentication system with secure account recovery features built with MERN stack.
 
 ## 🌐 Live Demos
 - **Frontend**: [authrecovery.netlify.app](https://authrecovery.netlify.app)
@@ -24,25 +24,21 @@ A complete authentication system with secure account recovery features built wit
 - 🔍 Identity verification  
 - ♻️ Secure account recovery  
 
-### 🛠️ Technical
-- 🏗️ MERN stack architecture  
-- 🔐 Bcrypt password hashing  
-- 📧 Nodemailer integration  
-- 📱 Responsive React frontend  
+## 🛠️ Technologies
 
-## 🛠️ Tech Stack
+**Frontend**:
+- React 18+ - UI Framework
+- TailwindCSS - Styling
+- Axios - HTTP client
 
-| Technology         | Purpose                        |
-|--------------------|--------------------------------|
-|               **Frontend**                          |
-| React              | UI Framework                   |
-| TailwindCSS        | For Styles                     |
-|                 **Backend**                         |
-| Node.js            | Runtime environment            |
-| Express            | Web framework                  |
-| MongoDB            | Database                       |
-| Mongoose           | ODM                            |
-| JWT                | Authentication tokens          |
+**Backend**:
+- Node.js - Runtime environment
+- Express - Web framework
+- MongoDB - Database
+- Mongoose - ODM
+- JWT - Authentication tokens
+- Bcrypt - Password hashing
+- Nodemailer - Email services
 
 ## 🚀 Getting Started
 
@@ -51,11 +47,8 @@ A complete authentication system with secure account recovery features built wit
 - MongoDB (Local or Atlas)
 - Git
 
-### Installation
+### 📦 Installation
 ```bash
-# Clone repository
-git clone https://github.com/SGMohan/Auth_Recovery.git
-cd Auth_Recovery
 
 # Install backend dependencies
 cd backend
@@ -64,4 +57,3 @@ npm install
 # Install frontend dependencies
 cd ../frontend
 npm install
-```
