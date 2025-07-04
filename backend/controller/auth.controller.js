@@ -399,7 +399,7 @@ AuthRouter.get("/validate-resetToken/:resetToken", async (req, res) => {
     });
 
     if (!user) {
-      return res.status(200).json({
+      return res.status(401).json({
         valid: false,
         message: "Invalid or expired reset token",
       });
