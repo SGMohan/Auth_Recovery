@@ -11,6 +11,14 @@ A complete authentication system with secure account recovery features built wit
 - **Frontend**: [authrecovery.netlify.app](https://authrecovery.netlify.app)
 - **Backend API**: [auth-recovery.onrender.com](https://auth-recovery.onrender.com)
 
+## 📌 Table of Contents
+- [Features](#✨-features)
+- [Installation](#🚀-installation)
+- [API Documentation](#📚-api-documentation)
+- [Environment Variables](#🔧-environment-variables)
+- [Contributing](#🤝-contributing)
+- [License](#📜-license)
+
 ## ✨ Features
 
 ### 🔒 Authentication
@@ -24,7 +32,7 @@ A complete authentication system with secure account recovery features built wit
 - 🔍 Identity verification  
 - ♻️ Secure account recovery  
 
-## 🛠️ Technologies
+## 🛠️ Tech Stack
 
 **Frontend**:
 - React 18+ - UI Framework
