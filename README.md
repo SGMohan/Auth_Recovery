@@ -1,11 +1,11 @@
-# 🔐 Auth Recovery System
+# 🔐 Password Reset Flow
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-5.0+-47A248?logo=mongodb&logoColor=white)
 ![React](https://img.shields.io/badge/React-18+-61DAFB?logo=react&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-14+-339933?logo=node.js&logoColor=white)
 
-A complete authentication system with secure account recovery features built with MERN stack.
+A complete password reset solution with security protections built with MERN stack.
 
 ## 🌐 Live Demos
 - **Frontend**: [authrecovery.netlify.app](https://authrecovery.netlify.app)
@@ -21,11 +21,12 @@ A complete authentication system with secure account recovery features built wit
 
 ## ✨ Features
 
-### 🔒 Authentication
-- 📝 User registration  
-- 🔑 Login with JWT  
-- ✉️ Email verification  
-- 🔄 Password reset flow   
+### 🔒 Password Reset Features
+- ✉️ Secure reset link generation
+- ⏳ Time-limited tokens (default 15 minutes)
+- 🔒 One-time use tokens
+- 🛡️ Brute-force protection
+- 📱 Mobile-friendly reset flow
 
 ## 🛠️ Technologies
 
