@@ -102,7 +102,7 @@ npm run dev
 
 ### 🧾 Postman Documentaion 
 ```bash
-https://documenter.getpostman.com/view/41342583/2sB2qdhLbJ
+https://documenter.getpostman.com/view/41342583/2sB34bMPeU
 ```
 
 ### 🧾 Auth Endpoints 
