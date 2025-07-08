@@ -67,7 +67,7 @@ const AppHeader = () => {
         </div>
       ) : (
         <button
-          onClick={() => navigate("/login")}
+          onClick={() => navigate("/login?mode=login")}
           className="flex items-center gap-2 px-4 py-1.5 sm:px-6 sm:py-2 rounded-full border border-gray-600 hover:bg-gray-100 hover:cursor-pointer transition-all text-gray-800 text-sm sm:text-base"
         >
           Login
